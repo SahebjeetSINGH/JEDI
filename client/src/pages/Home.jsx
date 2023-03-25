@@ -6,21 +6,33 @@ import image3 from '../assets/amongus_0.webp';
 import logo from '../assets/848381e4990a0f79bfe491f3e8300f7b.webp';
 
 const Home = () => {
-  const [trigger,changeTrigger]=useState(false);
+  const [trigger,changeTrigger]=useState(null);
   
+  useEffect(()=>{
+    console.log('saheb gay')
     const fetchData=async ()=>{
       const response=await fetch('https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15',{
-        method:'Get',
+        method:'GET',
         headers:{
+          "access-control-allow-origin" : "*",
           'Content-Type':'application/json',
         },
       })
       const result=await response.json();
-      console.log(result)
+      changeTrigger(result)
+     
+
+      
 
     }
-     
+    fetchData();
+
+
+  },[])
   
+    
+     
+    
   
   return (
     
@@ -33,7 +45,7 @@ const Home = () => {
       </div>
       <div className='flex flex-row gap-60'>
       <Card 
-        header='Valorant'
+        header={trigger===null?'Cant Load Right Now':trigger}
         description='bad game it sucks'
         price='free'
         photo={image2}
@@ -55,7 +67,7 @@ const Home = () => {
         photo={image3}
       />
 
-      <button className='rounded-md bg-[#ffffff] text-[#000] text-[15px]' onClick={()=>fetchData()}>
+      <button className='rounded-md bg-[#ffffff] text-[#000] text-[15px]' onClick={()=>{}}>
 
            Click me!
       </button>
