@@ -1,1 +1,1 @@
-# gaming-web3
+# JEDI
