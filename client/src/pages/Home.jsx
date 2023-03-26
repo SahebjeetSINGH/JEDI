@@ -4,6 +4,29 @@ import image from '../assets/Overwatch-Logo.webp';
 import image2 from '../assets/2576115.webp';
 import image3 from '../assets/amongus_0.webp';
 import logo from '../assets/848381e4990a0f79bfe491f3e8300f7b.webp';
+import '../index.css'
+
+const RenderCards=({data,title})=>{
+  if(data?.length>0){
+    return(
+      data.map((post)=>
+        <Card 
+        header={post.title}
+        description={post.metaCritic}
+        price={post.normalPrice}
+        photo={post.thumb}
+        />
+           
+  
+      )
+  
+
+    )
+    
+  }
+  
+
+}
 
 const Home = () => {
   const [trigger,changeTrigger]=useState(null);
@@ -20,6 +43,7 @@ const Home = () => {
       })
       const result=await response.json();
       changeTrigger(result)
+
      
 
       
@@ -43,29 +67,10 @@ const Home = () => {
           <h1 className='text-white text-[36px] '>GameZone</h1>
 
       </div>
-      <div className='flex flex-row gap-60'>
-      <Card 
-        header={trigger===null?'Cant Load Right Now':trigger}
-        description='bad game it sucks'
-        price='free'
-        photo={image2}
-        
-      />
-      
-      <Card 
-        header='Overwatch'
-        description='game is good'
-        price='free'
-        photo={image}
-        
-        
-      />
-      <Card 
-        header='Among Us'
-        description='bad game'
-        price='free'
-        photo={image3}
-      />
+      <div className=' grid grid-cols-4 gap-8 '>
+        <RenderCards data={trigger} title='Missing Posts' />
+        {console.log(trigger)}
+     
 
       <button className='rounded-md bg-[#ffffff] text-[#000] text-[15px]' onClick={()=>{}}>
 

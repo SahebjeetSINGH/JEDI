@@ -30,20 +30,21 @@ const Card = ({header,description,price,photo}) => {
     
 
     
-    <div className=' gradient__bg rounded-lg px-5 py-3 flex   w-80  h-fit flex-col gap-5 text-white'  >
-      {showImage && (
+    <div className=' gradient__bg rounded-lg px-5 py-3 flex     h-fit flex-col gap-5 text-white'  >
+      {/* {showImage && (
         <div>
-          <img src={photo} alt='..Image' />
+          
         </div>
-      )}
-      
+      )} */}
+      <img src={photo} alt='..Image' className='object-contain' />
       <h1 className='text-[30px]'>{header}</h1>
       <h1 className='justify-start'>{description}</h1>
       <h1>{price}</h1>
       <h2>{count}</h2>
+      
      
       <button  className='mt-5 rounded-md bg-[#7AA874] text-[14px] text-[#000] text-center w-2/3 ' onClick={()=>{setCount(count-1)}} >Increase</button>
-      <button className='mt-5  rounded-md bg-[purple]  text-[14px] text-[#000] text-center w-2/3' onClick={handleImage}>   {showImage? 'Hide Image':'Show Image'}</button>
+      
       
       
         
