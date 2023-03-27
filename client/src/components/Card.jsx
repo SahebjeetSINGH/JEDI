@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react'
 
-import image from '../assets/DSCN1902.jpg'
+
 
 const Card = ({header,description,price,photo}) => {
   const[count,setCount]=useState(0);
+
   const[showImage,toggleImage]=useState(true);
 
   useEffect(()=>{
@@ -15,14 +16,7 @@ const Card = ({header,description,price,photo}) => {
 
   },[count]);
 
-  const handleImage=()=>{
-    if(showImage===true){
-      toggleImage(false)
-    }else{
-      toggleImage(true);
-    }
-    
-  }
+  
 
  
 
@@ -30,20 +24,21 @@ const Card = ({header,description,price,photo}) => {
     
 
     
-    <div className=' gradient__bg rounded-lg px-5 py-3 flex     h-fit flex-col gap-5 text-white'  >
+    <div className='px-4 rounded-3xl  py-4 bg-gray-500 flex  content-center   h-fit flex-col gap-5 text-white' >
       {/* {showImage && (
         <div>
           
         </div>
       )} */}
-      <img src={photo} alt='..Image' className='object-contain' />
-      <h1 className='text-[30px]'>{header}</h1>
-      <h1 className='justify-start'>{description}</h1>
-      <h1>{price}</h1>
-      <h2>{count}</h2>
+      <img src={photo} alt='..Image' className=' rounded-3xl ' />
+      <h1 className='text-[30px] font-Kanit font-black mb-4'>{header}</h1>
+      <h1 className='justify-start font-Montserrat font-black mb-4'><span className='font-bold'>Reviews:</span> {description}</h1>
+      <h1 className='font-Montserrat font-semibold'>${price}</h1>
+      <h1></h1>
+      
       
      
-      <button  className='mt-5 rounded-md bg-[#7AA874] text-[14px] text-[#000] text-center w-2/3 ' onClick={()=>{setCount(count-1)}} >Increase</button>
+      <button  className='mt-5 rounded-md ml-16  text-[14px] text-white text-center w-2/3   transition ease-in-out delay-150 bg-[#f94449] hover:-translate-y-1 hover:scale-110 hover:bg-[#de0a26] duration-300' onClick={()=>{setCount(count+1)}} >BUY</button>
       
       
       
