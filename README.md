@@ -7,3 +7,8 @@ If we buy an digital copy we are totally dependent on the provider as we are the
 # Solution
 
 We have created a web application that removes the role of digital game distributor. For example If you purchase a game , a particular NFT will be generated to provide the ownership for the user and that NFT further can be used for trading account also.
+
+
+# Project Link
+
+https://pdf.ac/1Zr8MS
