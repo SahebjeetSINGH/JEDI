@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       dropShadow: {
-        '3xl': '0 35px 35px rgb(0, 0, 0,0.55)',
+        '2xl':'0 0 15px rgb(32,33,36,1)',
+        '3xl': '0 35px 35px rgb(32,33,36)',
         '4xl': [
             '0 0 56px rgb(0, 0, 0,0.55)',
             '0 0 56px rgb(0, 0, 0,0.55)'
@@ -19,5 +20,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar')],
 }

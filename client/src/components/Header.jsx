@@ -16,7 +16,7 @@ function classNames(...classes) {
 
 export default function Example() {
   return (
-    <Disclosure as="nav" className="bg-black bg-opacity-50">
+    <Disclosure as="nav" className="bg-black h-24 bg-opacity-50">
       {({ open }) => (
         <>
           <div className="mx-auto px-4 content-start">
@@ -35,8 +35,8 @@ export default function Example() {
               <div className="flex flex-0 items-center justify-center  sm:items-stretch sm:justify-start ">
                 <div className="flex flex-shrink-0 items-center ">
                   <img
-                    className="block h-8 w-auto lg:hidden  "
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    className="block h-14 px-7 w-auto lg:hidden  "
+                    src="https://cdn.discordapp.com/attachments/858656232960032788/1089891033799725157/logo.png"
                     alt="Your Company"
                   />
                   <img
@@ -77,11 +77,10 @@ export default function Example() {
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                     <div className="h-8 w-8 rounded-full">
+                      😀
+                      </div>
+
                     </Menu.Button>
                   </div>
                   <Transition

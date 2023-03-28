@@ -1,6 +1,15 @@
 @tailwind base;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--seco) var(--primary);
+}
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: rebeccapurple;
+  --secondary: cornflowerblue;
+}
 
 .gradient__bg {
   background:-moz-radial-gradient(circle at 3% 30%, rgb(222, 54, 68) 0%, rgb(13, 2, 3) 25%);

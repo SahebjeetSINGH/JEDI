@@ -6,7 +6,7 @@ import image1 from '../assets/fortnite.png'
 function Banner() {
   const slides = [
     {
-      url: 'https://cdn.discordapp.com/attachments/1053357407889268786/1089908385979314267/TEKKEN8_Header_mobile_2.png',
+      url: 'https://wallpaperaccess.com/full/1121398.jpg',
     },
     {
       url: 'https://cdn.discordapp.com/attachments/1053357407889268786/1089652018555146260/1082090.jpg',
@@ -54,11 +54,11 @@ function Banner() {
   };
 
   return (
-    <div className='  h-[1080px]  w-full drop-shadow-4xl  m-auto z-[1] relative group items-center justify-center '>
+    <div className='  h-[1080px]  w-full drop-shadow-4xl  m-auto z-[1] relative group items-center justify-center mb-11'>
       <div
          style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
 
-        className='w-full h-full rounded-xl bg-center bg-[length:100%_100%] duration-500 '
+        className='w-full h-full rounded-xl bg-center bg-[length:100%_100%] duration-500'
       >
         {/* <img src={slides[currentIndex].url} className='object-contain' /> */}
         <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full  bg-black/20 text-white cursor-pointer'>
@@ -72,12 +72,12 @@ function Banner() {
 
       {/* Left Arrow */}
       
-      <div className='flex top-4 justify-center py-2'>
+      <div className='flex top-4 justify-center py-2 '>
         {slides.map((slide, slideIndex) => (
           <div
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
-            className='text-2xl cursor-pointer'
+            className='text-2xl cursor-pointer '
           >
             <RxDotFilled />
           </div>
