@@ -17,6 +17,9 @@ module.exports = {
       fontFamily: {
         'Kanit':['Kanit'],
         'Montserrat':['Montserrat']
+      },
+      backdropBlur:{
+        '4xl':'100px'
       }
     },
   },

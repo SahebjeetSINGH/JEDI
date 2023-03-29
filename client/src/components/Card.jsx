@@ -7,7 +7,12 @@ const Card = ({header,description,price,photo}) => {
   const[count,setCount]=useState(0);
 
   const[showCard,toggleCard]=useState(true);
-  const[hash,setHash]=useState(null);
+  const[hash,setHash]=useState('hash');
+  const[amount,setAmount]=useState(0);
+  const[object,setObject]=useState({
+    photo:'photo'
+
+  });
 
   // useEffect(()=>{
   //   let timer=setTimeout(()=>{
@@ -26,28 +31,13 @@ const Card = ({header,description,price,photo}) => {
     
   // }
   let metadata = JSON.stringify({
-    "photo":{photo}
-  })
+    'photo':{photo}
+})
   const handleClick=async ()=>{
     try{
-      // await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS", {
-      //   method: "POST",
-      //   headers: {
-      //     pinata_api_key: apiKey,
-      //     pinata_secret_api_key: secretKey,
-      //     "Content-Type": `application/json`,
-      //   },
-      //   body: metadata,
-      // })
-      //   .catch((Err) => console.log(Err))
-      //   .then((res) => res.json())
-      //   .then((res) => {
-      //     console.log(res);
-      //     // console.log(formdata)
-      //   });
-      // const imghash = `ipfs://${resfile.data.IpfsHash}`;
-    
-      const response=await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS",{
+     setAmount(amount+1)
+      
+      await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS",{
         method:'POST',
        
         headers:{
@@ -61,15 +51,21 @@ const Card = ({header,description,price,photo}) => {
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        // console.log(formdata)
+        const value=res.IpfsHash;
+        setHash(value)
+        console.log(hash)
+
+        
+        
+
+        
+        
       });
-      const result=await response;
-      // const ImgHash=`ipfs://${result.data.ipfsHash}`;
-      // const signer=contract.connect(provider.getSigner());
-      // console.log(ImgHash)
-      // signer.add(account,ImgHash);
-      console.log(result)
-      setHash(result.IpfsHash);
+      
+      
+      
+     
+      
 
       
     
@@ -87,7 +83,7 @@ const Card = ({header,description,price,photo}) => {
   return(
     <div onClick={handleClick}>
       {showCard?(
-        <div className='px-8 rounded-md w-80 ml-10 mt-24 hover:drop-shadow-2xl py-4 bg-gradient-to-r bg-[#202124] flex  content-center   h-fit flex-col gap-5 text-white ' >
+        <div className='px-8 mb-28 rounded-md w-80 ml-10 mt-24 hover:drop-shadow-2xl py-4 bg-gradient-to-r bg-[#202124] flex  content-center   h-fit flex-col gap-5 text-white ' onMouseEnter={() => toggleCard(false)}  >
         
           <img src={photo}   />
           <div className='flex items-center  w-full'>
@@ -96,17 +92,18 @@ const Card = ({header,description,price,photo}) => {
           <h1 className='font-Montserrat font-semibold ml-40'>${price}</h1>
 
           </div>
-         {/* <div>
-            <img src={`https://gateway.pinata.cloud/ipfs/${hash}`} />
+          
+          {/* <div >
+            <img src={object.photo} />
 
-          </div>  */}
+          </div>   */}
           
         </div>
 
 
 
       ):(
-        <div className='px-8 rounded-3xl w-80 ml-10 mt-24  py-4 bg-[#202124] flex z-50 relative content-center   h-fit flex-col gap-5 text-white ' >
+        <div className='px-8 absolute rounded-3xl w-80 ml-10 mt-24  py-4 bg-[#202124] flex z-50  content-center   h-fit flex-col gap-5 text-white ' onMouseLeave={() => toggleCard(true)} >
         {/* {showImage && (
           <div>
             
@@ -142,4 +139,5 @@ const Card = ({header,description,price,photo}) => {
 }
 
 
-export default Card
+export default Card;
+

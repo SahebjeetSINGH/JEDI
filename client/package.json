@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
+    "@taquito/taquito": "^16.0.0",
     "axios": "^1.3.4",
     "framer-motion": "^10.9.1",
     "react": "^18.2.0",
