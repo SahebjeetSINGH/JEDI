@@ -5,7 +5,7 @@ import {FaShoppingCart} from 'react-icons/fa'
 import { TezosToolkit } from '@taquito/taquito';
 import { TempleWallet } from '@temple-wallet/dapp';
 
-const Tezos = new TezosToolkit('https://testnet-tezos.giganode.io');
+// const Tezos = new TezosToolkit('https://testnet-tezos.giganode.io');
 
 
 
@@ -23,22 +23,21 @@ function classNames(...classes) {
 export default function Example({amount}) {
   const handleClick=async ()=>{
     console.log('clicked')
-    TempleWallet.isAvailable()
-    .then(() => {
-     const mywallet = new TempleWallet('MyAwesomeDapp');
-    mywallet
-      .connect('ghostnet')
-      .then(() => {
-        Tezos.setWalletProvider(mywallet);
-        return mywallet.getPKH();
-      })
-      .then((pkh) => {
-        console.log(`Your address: ${pkh}`);
-      });
-  })
-  .catch((err) => console.log(err));
-  }
+    try {
+      
+      const available = await TempleWallet.isAvailable();
+      if (!available) {
+        throw new Error('Temple Wallet not installed');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    const wallet = new TempleWallet('MyAwesomeDapp');
+    await wallet.connect('mainnet' | 'limanet' | 'ghostnet' | 'mondaynet' | 'sandbox');
+    const Tezos = await wallet.toTezos();
 
+    const userAddress = wallet.pkh || (await wallet.getPKH());
+  }
   return (
     <Disclosure as="nav" className="bg-black h-24 z-50 relative bg-opacity-50">
       {({ open }) => (
@@ -88,7 +87,7 @@ export default function Example({amount}) {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button type='button' onClick={handleClick}  className='mr-10 px-4 py-2 font-Montserrat text-[15px] font-semibold rounded-md bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 '> 
+                <button type='button' onClick={handleClick} className='mr-10 px-4 py-2 font-Montserrat text-[15px] font-semibold rounded-md bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 '> 
                   Connect Wallet
                 </button>
                 <button
