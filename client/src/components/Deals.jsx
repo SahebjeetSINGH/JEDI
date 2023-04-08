@@ -6,31 +6,28 @@ import Pagination from '../components/Pagination';
 
 const RenderCards=({data,title})=>{
   
-    if(data?.length>0){
-      return(
-        
-        data?.map((post)=>
-          
-          <Card 
-          header={post.title}
-          description={post.steamRatingText}
-          price={post.normalPrice}
-          photo={post.thumb}
-          
-          />
-  
-          
-             
-    
-        )
-    
-  
-      )
+  if(data?.length>0){
+    return(
       
-    }
-    
+      data?.map((post)=>
+        
+        <Card 
+        key={post.gameID}
+        header={post.title}
+        description={post.steamRatingText}
+        price={post.normalPrice}
+        photo={post.thumb}
+        
+        />
+      )
   
+
+    )
+    
   }
+  
+
+}
 
 const Deals = () => {
     const [trigger,changeTrigger]=useState([]);
@@ -115,7 +112,7 @@ const Deals = () => {
       }
      
        
-       {console.log(trigger)}
+       
 
   
 

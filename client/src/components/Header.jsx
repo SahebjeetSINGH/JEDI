@@ -2,18 +2,19 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import {FaShoppingCart} from 'react-icons/fa'
+import {Link} from 'react-router-dom'
 import { TezosToolkit } from '@taquito/taquito';
 import { TempleWallet } from '@temple-wallet/dapp';
 
-// const Tezos = new TezosToolkit('https://testnet-tezos.giganode.io');
+const Tezos = new TezosToolkit('https://testnet-tezos.giganode.io');
 
 
 
 const navigation = [
-  { name: 'GameZone', href: '#', current: true },
-  { name: 'Offers', href: '#', current: false },
+  { name: 'GameZone', href: '/', current: true },
+  { name: 'Offers', href: '/', current: false },
   // { name: 'Cart', href: '#', current: false },
-  { name: 'Cart', href: '#', current: false },
+  { name: 'Cart', href: '/mycart', current: false },
 ]
 
 function classNames(...classes) {
@@ -23,21 +24,22 @@ function classNames(...classes) {
 export default function Example({amount}) {
   const handleClick=async ()=>{
     console.log('clicked')
-    try {
-      
-      const available = await TempleWallet.isAvailable();
-      if (!available) {
-        throw new Error('Temple Wallet not installed');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    const wallet = new TempleWallet('MyAwesomeDapp');
-    await wallet.connect('mainnet' | 'limanet' | 'ghostnet' | 'mondaynet' | 'sandbox');
-    const Tezos = await wallet.toTezos();
-
-    const userAddress = wallet.pkh || (await wallet.getPKH());
+    TempleWallet.isAvailable()
+    .then(() => {
+     const mywallet = new TempleWallet('MyAwesomeDapp');
+    mywallet
+      .connect('ghostnet')
+      .then(() => {
+        Tezos.setWalletProvider(mywallet);
+        return mywallet.getPKH();
+      })
+      .then((pkh) => {
+        console.log(`Your address: ${pkh}`);
+      });
+  })
+  .catch((err) => console.log(err));
   }
+
   return (
     <Disclosure as="nav" className="bg-black h-24 z-50 relative bg-opacity-50">
       {({ open }) => (
@@ -56,7 +58,7 @@ export default function Example({amount}) {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-0 items-center justify-center  sm:items-stretch sm:justify-start ">
-                <div className="flex flex-shrink-0 items-center ">
+                <Link to='/' className="flex flex-shrink-0 items-center ">
                   <img
                     className="block h-14 px-7 w-auto lg:hidden  "
                     src="https://cdn.discordapp.com/attachments/858656232960032788/1089891033799725157/logo.png"
@@ -67,13 +69,13 @@ export default function Example({amount}) {
                     src="https://cdn.discordapp.com/attachments/858656232960032788/1089891033799725157/logo.png"
                     alt="LOGO"
                   />
-                </div>
+                </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className=" ml-10 flex space-x-4 pt-5 ">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white font-Kanit text-[25px] mr-2'  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium font-Kanit text-[25px] mr-2'
@@ -81,24 +83,25 @@ export default function Example({amount}) {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button type='button' onClick={handleClick} className='mr-10 px-4 py-2 font-Montserrat text-[15px] font-semibold rounded-md bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 '> 
+                <button type='button' onClick={handleClick}  className='mr-10 px-4 py-2 font-Montserrat text-[15px] font-semibold rounded-md bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 '> 
                   Connect Wallet
                 </button>
-                <button
-                  type="button"
+                <Link
+                  to='/mycart'
+
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
                   <FaShoppingCart />
                   
                   {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
-                </button>
+                </Link>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -123,12 +126,12 @@ export default function Example({amount}) {
                     <Menu.Items className="absolute border  border-slate-200 right-0 z-10 mt-2 w-52 h-48 origin-top-right  rounded-md bg-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-300 text-[#200707] ' : '', ' text-[#fff] block px-4  text-sm  py-4')}
+                          <Link
+                          to='/mycart'
+                          className={classNames(active ? 'bg-gray-300 text-[#200707]' : '', ' text-[#fff] block px-4  text-sm py-4')}
                           >
                             Your Profile
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>

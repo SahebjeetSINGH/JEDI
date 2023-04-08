@@ -20,6 +20,7 @@ const RenderCards=({data,title})=>{
       data?.map((post)=>
         
         <Card 
+        key={post.gameID}
         header={post.title}
         description={post.steamRatingText}
         price={post.normalPrice}
@@ -87,11 +88,7 @@ const Home = () => {
     
     <div className=' bg-[#000] w-full h-screen scrollbar scrollbar-thumb-rose-500 '>
       
-      <div className=''>
-        
-      <Header  />
-      
-      </div>
+    
 
       <div className='w-1/2 z-20 absolute'>
        <div className='absolute z-20 w-full px-40 py-40'>
@@ -150,7 +147,7 @@ const Home = () => {
           }
          
            
-           {console.log(trigger)}
+           {/* {console.log(trigger)} */}
 
       
  
