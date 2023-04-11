@@ -67,23 +67,29 @@ const Card = ({header,description,price,photo}) => {
   
   })
   const buy=async()=>{
+    let dataBody={
+      image:photo,
+      title:header,
+      description:description,
+      creator:config.address
+
+    }
+    console.log(dataBody)
+    
     try{
       pinningMetadata=true;
-      const data=new FormData();
-      data.append("image",photo);
-      data.append("title",header)
-      data.append('description',description)
-      data.append('creator',config.address)
-
-      const response=await fetch('https://localhost:8080/mint',{
+   
+      const response=await fetch('http://localhost:8080/mint',{
         method:'POST',
         headers:{
           'Access-Control-Allow-Origin':'*',
+          'Content-Type':"application/json",
         },
-        body:data
+        body:dataBody,
       });
       if(response){
         const data=await response.json();
+        console.log(response)
         if(data.status===200 &&
           data.msg.metadataHash &&
           data.msg.imageHash){
@@ -94,52 +100,52 @@ const Card = ({header,description,price,photo}) => {
         }
         }else{
           throw 'No response'
-        }
-      }catch(error){
+      }
+    }catch(error){
         console.log(error)
-      }finally{
+    }finally{
         pinningMetadata=false;
         mintingToken=false;
-      }
+    }
    
   }
 
-  // const handleClick=async ()=>{
-  //   try{
+  const handleClick=async ()=>{
+    try{
      
       
-  //     await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS",{
-  //       method:'POST',
+      await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS",{
+        method:'POST',
        
-  //       headers:{
-  //         pinata_api_key:'79315d7be5e60ffdd152',
-  //         pinata_secret_api_key:'98ecde8b9fade82fa60dd0d346c013bbf70da7abe226a64c737281721e28c176',
-  //         'Content-Type':"application/json"
-  //       }   ,
-  //       body:metadata,
+        headers:{
+          pinata_api_key:'79315d7be5e60ffdd152',
+          pinata_secret_api_key:'98ecde8b9fade82fa60dd0d346c013bbf70da7abe226a64c737281721e28c176',
+          'Content-Type':"application/json"
+        }   ,
+        body:metadata,
   
-  //     }).catch((Err) => console.log(Err))
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       console.log(res);
-  //       const value=res.IpfsHash;
-  //       setHash([...hash,value])
-  //       list.push(value)
-  //       console.log(list)
+      }).catch((Err) => console.log(Err))
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        const value=res.IpfsHash;
+        setHash([...hash,value])
+        list.push(value)
+        console.log(list)
       
         
-  //     }); 
+      }); 
 
       
       
     
-  //   }catch(err){
-  //     alert(err)
+    }catch(err){
+      alert(err)
   
-  //   }
+    }
     
   
-  // }
+  }
   
 
 
@@ -174,7 +180,7 @@ const Card = ({header,description,price,photo}) => {
         
         
        
-        <button   className='mt-5 h-8 flex-initial relative rounded-md ml-12 text-[14px] text-white text-center w-2/3   transition ease-in-out delay-150 bg-[#f94449] hover:-translate-y-1 hover:scale-110 hover:bg-[#de0a26] duration-300' onClick={()=>{setCount(count+1)}} >BUY</button>
+        <button   className='mt-5 h-8 flex-initial relative rounded-md ml-12 text-[14px] text-white text-center w-2/3   transition ease-in-out delay-150 bg-[#f94449] hover:-translate-y-1 hover:scale-110 hover:bg-[#de0a26] duration-300' onClick={handleClick} >BUY</button>
         <button className=' font-Montserrat  border border-[#fff] px-2 font-semibold  justify-start ' onClick={buy}>Fetch</button>
         
         

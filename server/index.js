@@ -4,7 +4,7 @@ const fs=require('fs')
 
 
 const cors=require('cors')
-const multer=require('multer')
+
 
 const app=express()
 
@@ -14,15 +14,15 @@ let pinata;
 
 pinata=new pinataSDK('79315d7be5e60ffdd152','98ecde8b9fade82fa60dd0d346c013bbf70da7abe226a64c737281721e28c176')
 
-const corsOptions={
-    origin:[
-        'http://localhost:8080'
-    ],
-    optionsSuccessStatus:200
-}
-const upload=multer({dest:"uploads/"})
+// const corsOptions={
+//     origin:[
+//         '*'
+//     ],
+//     optionsSuccessStatus:200
+// }
+// const upload=multer({dest:"uploads/"})
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json({limit:'50mb'}))
 app.use(
     express.urlencoded({
@@ -33,12 +33,16 @@ app.use(
     })
 )
 
-app.post('/mint',upload.single('image'),async (req,res)=>{
-    const multerReq=req.body
-    if(!multerReq.file){
+app.post('/mint',async (req,res)=>{
+    const returnedBody=req.body
+    console.log(returnedBody)
+    console.log('hello')
+    
+    if(!returnedBody){
         res.status(500).json({status:false,msg:'No file Provided!'})
     }else{
-        const fileName=multerReq.file.fileName;
+        const fileName=returnedBody.title
+        console.log(fileName)
         await pinata
           .testAuthentication()
           .catch((err)=>{
@@ -47,7 +51,7 @@ app.post('/mint',upload.single('image'),async (req,res)=>{
         const readableStreamForFile=fs.createReadStream(`./uploads/${fileName}`)
         const options={
             pinataMetadata:{
-                name:req.body.title.replace(/\s/g,"-"),
+                name:req.body.title,
                 keyValues:{
                     description:req.body.description
                 }
@@ -79,13 +83,13 @@ app.post('/mint',upload.single('image'),async (req,res)=>{
               }
             })
             if(pinnedMetadata.IpfsHash && pinnedMetadata.PinSize>0){
-            //    res.status(200).json({
-            //      status: true,
-            //      msg: {
-            //         imageHash: pinnedFile.IpfsHash,
-            //         metadataHash: pinnedMetadata.IpfsHash
-            //      }
-            //    });
+               res.status(200).json({
+                 status: true,
+                 msg: {
+                    imageHash: pinnedFile.IpfsHash,
+                    metadataHash: pinnedMetadata.IpfsHash
+                 }
+               });
             }
         }
     }
