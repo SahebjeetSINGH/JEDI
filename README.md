@@ -15,7 +15,7 @@ Easier trade and unbreakable promises with smart contracts.
 Storing in the blockchain means safe license and hence minimal tampering
 
 
-<img width="100%" src="https://tenor.com/view/cat-cats-awkward-awkward-cat-cat-awkward-gif-24906225.gif" >
+<img width="100%" src="https://imgs.search.brave.com/l_wY9gdDk7lnMW7goQVwF0CryKQW3iyQUJMs-Jjb708/rs:fit:220:220:1/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/aU1QYS1GTHc5bWtB/QUFBTS9jYXQtY2F0/cy5naWY.gif" >
 
 # Project Link
 
