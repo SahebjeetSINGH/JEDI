@@ -1,32 +1,46 @@
 import React,{useState,useContext, createContext} from 'react'
 import { Navigate,Link } from 'react-router-dom';
 import { TezosToolkit } from '@taquito/taquito'
+import { AnimatePresence,motion } from 'framer-motion';
 import config from '../config/index'
-// import axios from 'axios';
-const Tezos=new TezosToolkit("RPC_URL")
+import axios from 'axios';
+import { slideAnimation } from '../utils/motion';
+// import MintNFT from '../utils/mint';
+const Tezos=new TezosToolkit("https://ghostnet.smartpy.io/")
 
-const getUserNFTS=async(address)=>{
-  const contract=await Tezos.wallet.at(config.contractAddress);
-  nftStorage=await contract.storage();
-  const getTokenIds=await nftStorage.reverse_ledger.get(address);
-  if(getTokenIds){
-    console.log('Executed')
-    userNFTS=await Promise.all([
-      getTokenIds.map(async (id)=>{
-        const tokenid=id.toNumber();
-        const metadata=await nftStorage.token_metadata.get(tokenid)
-        const tokenInfoBytes=metadata.token_info.get("")
-        const tokenInfo=bytes2Char(tokenInfoBytes);
-        return{
-          tokenid,
-          ipfsHash:
-             tokenInfo.slice(0,7)==='ipfs://'?tokenInfo.slice(7):null
-        }
 
-      })
-    ])
-  }
-}
+const MintNFT = ({ amount, metadata }) => {
+  const [isMinting, setIsMinting] = useState(false);
+  // const contract= Tezos.wallet.at(config.contractAddress);
+  // console.log(contract)
+  console.log()
+  console.log(config.contractAddress)
+
+  const handleMinting = async () => {
+    try {
+      setIsMinting(true);
+      const contract = await Tezos.wallet.at(config.contractAddress);
+      let bytes = '';
+      for (let i = 0; i < metadata.length; i++) {
+        bytes += metadata.charCodeAt(i).toString(16).slice(-4);
+      }
+      console.log(bytes)
+      console.log(contract)
+      const op = await contract.methods.mint(amount, bytes).send();
+      await op.confirmation();
+      setIsMinting(false);
+    } catch (error) {
+      setIsMinting(false);
+      console.log(error);
+    }
+  };
+
+  return (
+    <button className='mt-5 h-8 flex-initial relative rounded-md ml-12 text-[14px] text-white text-center w-2/3   transition ease-in-out delay-150 bg-[#000] hover:-translate-y-1 hover:scale-110 hover:bg-[#000] duration-300' onClick={handleMinting} disabled={isMinting}>
+      {isMinting ? 'Minting...' : 'Mint NFT'}
+    </button>
+  );
+};
 let list=[];
 export const hashContext=createContext({
   hash:[],
@@ -51,9 +65,6 @@ export function HashProvider({children}){
 
 }
 
-
-
-
 const Card = ({header,description,price,photo}) => {
   const[count,setCount]=useState(0);
 
@@ -67,17 +78,20 @@ const Card = ({header,description,price,photo}) => {
   
   })
   const buy=async()=>{
-    let dataBody={
-      image:photo,
-      title:header,
-      description:description,
-      creator:config.address
-
-    }
-    console.log(dataBody)
+    
     
     try{
       pinningMetadata=true;
+      let dataBody={
+        image:photo,
+        title:header,
+        description:description,
+        creator:config.address
+  
+      }
+      console.log(dataBody)
+      const data=JSON.stringify(dataBody)
+     
    
       const response=await fetch('http://localhost:8080/mint',{
         method:'POST',
@@ -85,7 +99,7 @@ const Card = ({header,description,price,photo}) => {
           'Access-Control-Allow-Origin':'*',
           'Content-Type':"application/json",
         },
-        body:dataBody,
+        body:data,
       });
       if(response){
         const data=await response.json();
@@ -114,7 +128,7 @@ const Card = ({header,description,price,photo}) => {
     try{
      
       
-      await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS",{
+      await axios("https://api.pinata.cloud/pinning/pinJSONToIPFS",{
         method:'POST',
        
         headers:{
@@ -151,8 +165,9 @@ const Card = ({header,description,price,photo}) => {
 
   return(
     <div >
+      
       {showCard?(
-        <div className='px-8 mb-28 rounded-md w-80 ml-10 mt-24 hover:drop-shadow-2xl py-4 bg-gradient-to-r bg-[#202124] flex  content-center   h-fit flex-col gap-5 text-white ' onMouseEnter={() => toggleCard(false)}  >
+        <motion.div {...slideAnimation('down')} className='px-8 mb-28 rounded-md w-80 ml-10 mt-24 hover:drop-shadow-2xl py-4 bg-gradient-to-r bg-[#202124] flex  content-center   h-fit flex-col gap-5 text-white ' onMouseEnter={() => toggleCard(false)}  >
         
           <img src={photo}   />
           <div className='flex items-center  w-full'>
@@ -165,12 +180,12 @@ const Card = ({header,description,price,photo}) => {
           
          
           
-        </div>
+        </motion.div>
 
 
 
       ):(
-        <div className='px-8 absolute rounded-3xl w-80 ml-10 mt-24  py-4 bg-[#202124] flex z-50  content-center   h-fit flex-col gap-5 text-white ' onMouseLeave={() => toggleCard(true)} >
+        <div className='px-8 absolute rounded-3xl w-80 ml-10 mt-24  py-4 bg-[#202124] flex z-50  content-center   h-fit flex-col gap-5 text-white '  onMouseLeave={() => toggleCard(true)} >
        
         <img src={photo} alt='..Image' className=' rounded-3xl ' />
         <h1 className='text-[30px] font-Kanit font-black  truncate'>{header}</h1>
@@ -180,9 +195,9 @@ const Card = ({header,description,price,photo}) => {
         
         
        
-        <button   className='mt-5 h-8 flex-initial relative rounded-md ml-12 text-[14px] text-white text-center w-2/3   transition ease-in-out delay-150 bg-[#f94449] hover:-translate-y-1 hover:scale-110 hover:bg-[#de0a26] duration-300' onClick={handleClick} >BUY</button>
-        <button className=' font-Montserrat  border border-[#fff] px-2 font-semibold  justify-start ' onClick={buy}>Fetch</button>
+        <button   className='mt-5 h-8 flex-initial relative rounded-md ml-12 text-[14px] text-white text-center w-2/3   transition ease-in-out delay-150 bg-[#f94449] hover:-translate-y-1 hover:scale-110 hover:bg-[#de0a26] duration-300' onClick={buy} >BUY</button>
         
+        <MintNFT  amount={price} metadata={metadata}/> 
         
           
             

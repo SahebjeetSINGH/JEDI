@@ -1,4 +1,6 @@
 import React,{useState,useEffect} from 'react'
+import { AnimatePresence,motion } from 'framer-motion';
+import { slideAnimation,headTextAnimation } from '../utils/motion'
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const HeadText = () => {
@@ -37,10 +39,29 @@ const HeadText = () => {
 
 
   return (
-    <div className='w-4/6'>
-        <h1 onMouseOver={handleMouseOver} data-value="REIMAGINE THE WAY YOU OWN GAMES" className='text-[#fff] font-Kanit font-black text-[46px]'>{text}</h1>
-        
-    </div>
+    <AnimatePresence>
+
+    
+     <motion.div className='ml-20' {...slideAnimation('left')}>
+        <motion.div className='flex w-4/6 px-2 py-2 pl-[10px] backdrop-blur-2xl justify-center  sm:hidden md:hidden lg:hidden xl:hidden 2xl:block 3xl:block 4xl:block ' {...headTextAnimation} >
+        <h1 className='text-[#fff] font-Bebas-Neue  italic font-black text-[4rem] '>Re Imagine the Way you own Games</h1>
+
+        </motion.div>
+      
+      <motion.div className=' w-[50vw] ml-[26vw] -mt-36 backdrop-blur-3xl justify-center sm:hidden md:block lg:block xl:block 2xl:hidden 3xl:hidden 4xl:hidden ' >
+      <h1 className='text-[#fff] font-Bebas-Neue  italic font-black text-[3.6rem] '>Re Imagine the Way you own Games</h1>
+      </motion.div>
+      <motion.div className=' w-[50vw] ml-[26vw] -mt-36 backdrop-blur-3xl justify-center sm:block md:hidden lg:hidden xl:hidden 2xl:hidden 3xl:hidden 4xl:hidden ' >
+      <h1 className='text-[#fff] font-Bebas-Neue  italic font-black text-[3.5rem] '>Re Imagine the Way you own Games</h1>
+      </motion.div>
+      
+     </motion.div>
+
+    </AnimatePresence>
+    
+    
+    
+    
   )
 }
 

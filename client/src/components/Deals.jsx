@@ -20,13 +20,8 @@ const RenderCards=({data,title})=>{
         
         />
       )
-  
-
-    )
-    
+    ) 
   }
-  
-
 }
 
 const Deals = () => {
@@ -57,11 +52,6 @@ const Deals = () => {
             setLoading(false)
           }
           
-    
-         
-    
-          
-    
         }
         fetchData();
     
@@ -77,10 +67,10 @@ const Deals = () => {
     const paginateBack = () => setCurrentPage(currentPage - 1);
   return (
     <div className=' px-4 relative z-20 drop-shadow-4xl flex flex-col'>
-     <div  className=' ml-5'>
-       <h1 className='text-[#fff] font-Kanit  text-[32px] inline-block px-6 rounded-lg opacity-80 bg-[#202124] '>New Deals!!</h1>
-     </div>
-     <div className='w-full'>
+    <div  className='  w-96'>
+      <h1 className='text-[#fff] font-Kanit  text-[2rem] inline-block px-6 rounded-lg font-extrabold	ml-11 opacity-80 bg-[#202124] '>Deals!</h1>
+    </div>
+      <div className='w-full'>
      
       {loading?(
     
@@ -90,13 +80,14 @@ const Deals = () => {
         
       ):(
         <div className=' flex w-full flex-col'>
-          <div className='grid grid-cols-4 gap-8'>
+          <div className='grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4'>
 
            <RenderCards data={currentPosts} title='Missing Posts' />
 
           </div>
+          
         
-        <div className=' mt-24 mb-10 items-center flex justify-center'>
+        <div className=' mt-24 items-center flex justify-center'>
         <Pagination
         postsPerPage={postsPerPage}
         totalPosts={trigger.length}
@@ -112,7 +103,7 @@ const Deals = () => {
       }
      
        
-       
+       {console.log(trigger)}
 
   
 

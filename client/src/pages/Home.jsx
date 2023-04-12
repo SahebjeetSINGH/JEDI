@@ -1,15 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import Card from '../components/Card';
 import Slider from '../components/Banner'
-import Header from '../components/Header'
+// import Example from '../components/Header'
 import HeadText from '../components/HeadText';
 import Loader from '../components/Loader.jsx'
 import Pagination from '../components/Pagination';
 import Deals from '../components/Deals';
+import { AnimatePresence,motion } from 'framer-motion';
 
 import '../index.css'
-
-
+import { slideAnimation } from '../utils/motion';
 
 
 const RenderCards=({data,title})=>{
@@ -85,35 +85,45 @@ const Home = () => {
     
   
   return (
+    <AnimatePresence>
     
-    <div className=' bg-[#000] w-full h-screen scrollbar scrollbar-thumb-rose-500 '>
+    <motion.div className=' bg-[#000] w-full h-screen  ' {...slideAnimation('down')}>
       
-    
+      {/* <div className=''> */}
+        
+      {/* <Header  /> */}
+      
+      {/* </div> */}
 
-      <div className='w-1/2 z-20 absolute'>
-       <div className='absolute z-20 w-full px-40 py-40'>
-         <HeadText />
+      <div className='w-1/2 z-20 absolute '>
+       <div className=' absolute z-20 w-2/3  mt-44    '>
+         <HeadText className='relative' />
        </div>
-       <div className='absolute z-10 w-full bg-gradient-to-b from-[#202124] to-[#000]  h-screen  blur-3xl opacity-50 mr-40'>
-         
-       </div>
+       
 
       </div>
       
-
-      <div className=' h-4/6 object-contain drop-shadow-4xl shadow-black-500/50'>
-
+      
+      <div className='flex justify-center  object-contain  shadow-black-500/50'>
+      <div className='w-[93vw] h-[70vh] object-contain sm:hidden md:hidden lg:hidden xl:hidden 2xl:block 3xl:block 4xl:block' >
+          
       <Slider />
+      
+      </div>
+      <div className=' border-[20px] border-yellow-500 border-l-[20px] border-l-transparent border-r-[50px] border-r-transparent
+       bg-black w-[93vw] h-[20vh] object-contain sm:block md:block lg:block xl:block 2xl:hidden 3xl:hidden 4xl:hidden'>
+        
+      </div>
 
       </div>
-      <div className='blur-3xl absolute w-full h-4/6 z-10 bg-gradient-to-b from-[#202124] to-[#000] opacity-75'> 
+      {/* <div className='blur-3xl absolute w-full h-4/6 z-10 bg-gradient-to-b from-[#202124] to-[#000] opacity-75'> 
       
 
-      </div>
+      </div> */}
       
       <div className=' px-4 relative z-20 drop-shadow-4xl flex flex-col'>
-        <div  className=' ml-5'>
-          <h1 className='text-[#fff] font-Kanit  text-[32px] inline-block px-6 rounded-lg opacity-80 bg-[#202124] '>Checkout These!</h1>
+        <div  className='  w-96'>
+          <h1 className='text-[#fff] font-Kanit  text-[2rem] inline-block px-6 rounded-lg font-extrabold	ml-11 opacity-80 bg-[#202124] '>Checkout These!</h1>
         </div>
           <div className='w-full'>
          
@@ -125,11 +135,12 @@ const Home = () => {
             
           ):(
             <div className=' flex w-full flex-col'>
-              <div className='grid grid-cols-4 gap-8'>
+              <div className='grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4'>
 
                <RenderCards data={currentPosts} title='Missing Posts' />
 
               </div>
+              
             
             <div className=' mt-24 items-center flex justify-center'>
             <Pagination
@@ -147,7 +158,7 @@ const Home = () => {
           }
          
            
-           {/* {console.log(trigger)} */}
+           {console.log(trigger)}
 
       
  
@@ -159,8 +170,10 @@ const Home = () => {
      
       
       
-    </div>
+    </motion.div>
+    </AnimatePresence>
   )
+   
 }
 
 export default Home;

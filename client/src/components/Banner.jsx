@@ -6,7 +6,7 @@ import image1 from '../assets/fortnite.png'
 function Banner() {
   const slides = [
     {
-      url: 'https://wallpaperaccess.com/full/1121398.jpg',
+      url: 'https://images5.alphacoders.com/109/1091255.png',
     },
     {
       url: 'https://cdn.discordapp.com/attachments/1053357407889268786/1089652018555146260/1082090.jpg',
@@ -16,7 +16,7 @@ function Banner() {
     },
 
     {
-      url: 'https://images5.alphacoders.com/109/1091255.png',
+      url: 'https://wallpaperaccess.com/full/1121398.jpg',
     },
     {
       url: 'https://images2.alphacoders.com/949/949049.png',
@@ -54,7 +54,7 @@ function Banner() {
   };
 
   return (
-    <div className='  h-[1080px]  w-full drop-shadow-4xl  m-auto z-[1] relative group items-center justify-center mb-11'>
+    <div className='   h-[1080px]  w-full drop-shadow-4xl  m-auto z-[1] relative group items-center justify-center mb-11'>
       <div
          style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
 

@@ -6,7 +6,8 @@ import {Link} from 'react-router-dom'
 import { TezosToolkit } from '@taquito/taquito';
 import { TempleWallet } from '@temple-wallet/dapp';
 
-const Tezos = new TezosToolkit('https://testnet-tezos.giganode.io');
+
+const Tezos = new TezosToolkit("https://ghostnet.smartpy.io/");
 
 
 
@@ -34,6 +35,7 @@ export default function Example({amount}) {
         return mywallet.getPKH();
       })
       .then((pkh) => {
+        
         console.log(`Your address: ${pkh}`);
       });
   })

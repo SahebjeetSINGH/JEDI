@@ -34,7 +34,7 @@ app.use(
 )
 
 app.post('/mint',async (req,res)=>{
-    const returnedBody=req.body
+    let returnedBody=req.body
     console.log(returnedBody)
     console.log('hello')
     
@@ -48,21 +48,22 @@ app.post('/mint',async (req,res)=>{
           .catch((err)=>{
             res.status(500).json(JSON.stringify(err))
           })
-        const readableStreamForFile=fs.createReadStream(`./uploads/${fileName}`)
+        // const readableStreamForFile=fs.createReadStream(`./uploads/${fileName}`)
         const options={
             pinataMetadata:{
-                name:req.body.title,
+                name:returnedBody.title,
                 keyValues:{
-                    description:req.body.description
+                    description:returnedBody.description
                 }
             }
         }
-        const pinnedFile=await pinata.pinFileToIPFS(
-            readableStreamForFile,
+        const pinnedFile=await pinata.pinJSONToIPFS(
+            returnedBody,
             options
         )
-        if(pinnedFile.IpfsHash && pinnedFile.PinSize>0){
-            fs.unlinkSync(`./uploads/${fileName}`)
+        if(pinnedFile.IpfsHash){
+            console.log(pinnedFile.IpfsHash)
+            // fs.unlinkSync(`./uploads/${fileName}`)
             const metadata={
                 name:req.body.title,
                 description:req.body.description,
@@ -82,7 +83,7 @@ app.post('/mint',async (req,res)=>{
                  name:'Jedi-metadata'
               }
             })
-            if(pinnedMetadata.IpfsHash && pinnedMetadata.PinSize>0){
+            if(pinnedMetadata.IpfsHash ){
                res.status(200).json({
                  status: true,
                  msg: {

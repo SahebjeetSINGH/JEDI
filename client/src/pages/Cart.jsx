@@ -3,7 +3,30 @@ import React,{useState,useContext} from 'react'
 import Header from '../components/Header'
 import Card2 from '../components/Card2'
 
+// import config from '../config/index'
 
+// const getUserNFTS=async(address)=>{
+//   const contract=await Tezos.wallet.at(config.contractAddress);
+//   nftStorage=await contract.storage();
+//   const getTokenIds=await nftStorage.reverse_ledger.get(address);
+//   if(getTokenIds){
+//     console.log('Executed')
+//     userNFTS=await Promise.all([
+//       getTokenIds.map(async (id)=>{
+//         const tokenid=id.toNumber();
+//         const metadata=await nftStorage.token_metadata.get(tokenid)
+//         const tokenInfoBytes=metadata.token_info.get("")
+//         const tokenInfo=bytes2Char(tokenInfoBytes);
+//         return{
+//           tokenid,
+//           ipfsHash:
+//              tokenInfo.slice(0,7)==='ipfs://'?tokenInfo.slice(7):null
+//         }
+
+//       })
+//     ])
+//   }
+// }
 
 const Render=({list})=>{
     if(list?.length>0){
@@ -21,9 +44,6 @@ const Render=({list})=>{
         <h1>'Missing NFTS'</h1>
     )
 }
-
-
-
 
 const Cart = () => {
     const hash=[]
@@ -70,9 +90,7 @@ const Cart = () => {
     
   return (
     <div  > 
-       {/* {console.log(list)} */}
-       <RenderCards />
-       <Render list={url} />
+       
       
     </div>
   )
