@@ -20,7 +20,7 @@ function App() {
       <div>
         <Header />
       </div>
-       <main className=' w-full min-h-[calc(100vh-73px)]'>
+       <main className=' w-full min-h-[calc(100vh-73px)] app__bg bg-opacity-50'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/mycart' element={<Cart />} />

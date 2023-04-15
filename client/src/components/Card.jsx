@@ -188,7 +188,7 @@ const Card = ({header,description,price,photo}) => {
         <div className='px-8 absolute rounded-3xl w-80 ml-10 mt-24  py-4 bg-[#202124] flex z-50  content-center   h-fit flex-col gap-5 text-white '  onMouseLeave={() => toggleCard(true)} >
        
         <img src={photo} alt='..Image' className=' rounded-3xl ' />
-        <h1 className='text-[30px] font-Kanit font-black  truncate'>{header}</h1>
+        <h1 className='text-[30px] font-Kanit font-black  '>{header}</h1>
         <h1 className='justify-start font-Montserrat font-black '><span className='font-bold'>Reviews:</span> {description}</h1>
         <h1 className='font-Montserrat font-semibold'>${price}</h1>
         <h1></h1>

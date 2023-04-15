@@ -1,0 +1,10 @@
+.app__bg {
+    background-image: url('https://media.discordapp.net/attachments/1085637599730872372/1096869423417131159/bg_image.png?width=1202&height=676');    
+    background-color: #000;
+    object-fit: fill;
+    background-position:center;
+    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+  }                     

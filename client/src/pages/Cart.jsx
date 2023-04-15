@@ -1,8 +1,8 @@
 import React,{useState,useContext} from 'react'
-
 import Header from '../components/Header'
 import Card2 from '../components/Card2'
-
+// import Form from '../components/Form'
+import Formfield from '../components/Form'
 // import config from '../config/index'
 
 // const getUserNFTS=async(address)=>{
@@ -89,8 +89,8 @@ const Cart = () => {
     
     
   return (
-    <div  > 
-       
+    <div className='w-full app__bg h-screen flex items-center justify-center'> 
+       <Formfield />
       
     </div>
   )
