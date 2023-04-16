@@ -1,9 +1,12 @@
-const express=require('express')
-const pinataSDK=require('@pinata/sdk')
-const fs=require('fs')
+import express from 'express';
+import cors from 'cors';
+import pinataSDK from '@pinata/sdk'
+
+import Connect from './mongodb/Connect.js';
+import Profile from './models/Profile.js'
+import bcrypt from 'bcrypt'
 
 
-const cors=require('cors')
 
 
 const app=express()
@@ -32,6 +35,11 @@ app.use(
 
     })
 )
+
+app.get('/',(req,res)=>{
+    res.send("Hello World")
+})
+
 
 app.post('/mint',async (req,res)=>{
     let returnedBody=req.body
@@ -101,64 +109,101 @@ app.post('/profile',async(req,res)=>{
     let returnedBody=req.body
     console.log(returnedBody)
     console.log('hello')
+    let FirstName=returnedBody.FirstName;
+    let LastName=returnedBody.LastName;
+    let Alias=returnedBody.Alias;
+    let Email=returnedBody.Email
+    let PassCode=returnedBody.Passcode
     
-    if(!returnedBody){
-        res.status(500).json({status:false,msg:'No file Provided!'})
-    }else{
-        const fileName=returnedBody.FirstName
-        console.log(fileName)
-        await pinata
-          .testAuthentication()
-          .catch((err)=>{
-            res.status(500).json(JSON.stringify(err))
-          })
-        // const readableStreamForFile=fs.createReadStream(`./uploads/${fileName}`)
-        const options={
-            pinataMetadata:{
-                name:returnedBody.Alias,
-                keyValues:{
-                    password:returnedBody.Passcode
-                }
-            }
-        }
-        const pinnedFile=await pinata.pinJSONToIPFS(
-            returnedBody,
-            options
-        )
-        if(pinnedFile.IpfsHash){
-            console.log(pinnedFile.IpfsHash)
-            // fs.unlinkSync(`./uploads/${fileName}`)
-            const metadata={
-                name:req.body.FirstName,
-                description:req.body.Alias,
-                symbol:"JEDI",
-                artifactUri:`ipfs://${pinnedFile.IpfsHash}`,
-                displayUri:`ipfs://${pinnedFile.IpfsHash}`,
-                creators:[req.body.FirstName],
-                decimals:0,
-                is_transferable:true,
+    // async function hashPassword(PassCode) {
+    //     const hash = await bcrypt.hash(PassCode, 5);
+    //     return hash
 
-            }
         
-            const pinnedMetadata=await pinata.pinJSONToIPFS(metadata,{
-              pinataMetadata:{
-                 name:'Jedi-metadata'
-              }
-            })
-            if(pinnedMetadata.IpfsHash ){
-               res.status(200).json({
-                 status: true,
-                 msg: {
-                    imageHash: pinnedFile.IpfsHash,
-                    metadataHash: pinnedMetadata.IpfsHash
-                 }
-               });
-            }
-        }
+        
+    // }
+    // const Passcode=hashPassword(PassCode)
+    // console.log(Passcode)
+        
+    // if(!returnedBody){
+    //     res.status(500).json({status:false,msg:'No file Provided!'})
+    // }else{
+    //     const fileName=returnedBody.FirstName
+    //     console.log(fileName)
+    //     await pinata
+    //       .testAuthentication()
+    //       .catch((err)=>{
+    //         res.status(500).json(JSON.stringify(err))
+    //       })
+    //     // const readableStreamForFile=fs.createReadStream(`./uploads/${fileName}`)
+    //     const options={
+    //         pinataMetadata:{
+    //             name:returnedBody.Alias,
+    //             keyValues:{
+    //                 password:returnedBody.Passcode
+    //             }
+    //         }
+    //     }
+    //     const pinnedFile=await pinata.pinJSONToIPFS(
+    //         returnedBody,
+    //         options
+    //     )
+    //     if(pinnedFile.IpfsHash){
+    //         console.log(pinnedFile.IpfsHash)
+    //         // fs.unlinkSync(`./uploads/${fileName}`)
+    //         const metadata={
+    //             name:req.body.FirstName,
+    //             description:req.body.Alias,
+    //             symbol:"JEDI",
+    //             artifactUri:`ipfs://${pinnedFile.IpfsHash}`,
+    //             displayUri:`ipfs://${pinnedFile.IpfsHash}`,
+    //             creators:[req.body.FirstName],
+    //             decimals:0,
+    //             is_transferable:true,
+
+    //         }
+        
+    //         const pinnedMetadata=await pinata.pinJSONToIPFS(metadata,{
+    //           pinataMetadata:{
+    //              name:'Jedi-metadata'
+    //           }
+    //         })
+    //         if(pinnedMetadata.IpfsHash ){
+    //            res.status(200).json({
+    //              status: true,
+    //              msg: {
+    //                 imageHash: pinnedFile.IpfsHash,
+    //                 metadataHash: pinnedMetadata.IpfsHash
+    //              }
+    //            });
+    //         }
+    //     }
+    // }
+    const newProfile=await Profile.create({
+       FirstName,
+       LastName,
+       Alias,
+       Email,
+      
+       
+
+    })
+    res.status(201).json({success:true,data:newProfile});
+
+})
+
+const StartServer=async ()=>{
+    try{
+        Connect("mongodb+srv://FirstKenpachi:27442650@cluster0.ryesd.mongodb.net/?retryWrites=true&w=majority")
+        app.listen(8080,()=>console.log("Server is started!"))
+
+
+    }catch(err){
+        console.log(err);
+
     }
+    
 
-})
 
-app.listen(port,()=>{
-    console.log(`Server is succesfully connected! ${port}`)
-})
+}
+StartServer();

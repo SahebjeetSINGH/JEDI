@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { slideAnimation,headTextAnimation } from '../utils/motion'
 import { AnimatePresence,motion } from 'framer-motion'
 
+
 const Formfield= () => {
   const navigate=useNavigate();
   const [visible,setVisible]=useState('password')
@@ -40,7 +41,18 @@ const Formfield= () => {
   }
   const submitData=async()=>{
    
-   
+      
+    // async function hashPassword(PassCode) {
+    //   const hash = await bcrypt.hash(PassCode, 5);
+    //   return hash
+
+      
+      
+    // }
+    // const Passcode=hashPassword(form.Passcode)
+    // console.log(Passcode)
+    // setForm({...form,'Passcode':Passcode})
+    
     const formData=JSON.stringify(form)
     console.log(formData)
     try{
@@ -81,22 +93,22 @@ const Formfield= () => {
             
           <motion.div className={`${hide}`} {...slideAnimation('down')}>
             <div className='m-2 px-2 py-2 w-full  flex justify-center mb-4 items-center  '>
-            <label for='name' className=' text-[#fff] text-[20px] font-Kanit mr-2 '>First Name:</label>
+            <label  className=' text-[#fff] text-[20px] font-Kanit mr-2 '>First Name:</label>
             <input type='text' id='fname' name='FirstName' value={form.FirstName} placeholder='First Name' onChange={handleChange}  className='font-Kanit bg-gray-50 border-4 border-gray-300 text-gray-900 text-sm focus:ring-red-800 ml-2 mt-2 rounded-sm  h-1/2 outline-none py-1 w-[400px]'  /><br/>
 
             </div >
             <div className='m-2 px-2 py-2 w-full  flex justify-center mb-4 items-center '>
-            <label for='name' className='text-[#fff] text-[20px] font-Kanit mr-2'>Last Name:</label>
+            <label  className='text-[#fff] text-[20px] font-Kanit mr-2'>Last Name:</label>
             <input type='text' id='lname' name='LastName'  value={form.LastName} placeholder='Last Name' onChange={handleChange} className=' font-Kanit bg-gray-50 border-4 border-gray-300 text-gray-900 text-sm focus:ring-red-800 ml-2 mt-2 rounded-sm  h-1/2 outline-none py-1 w-[400px]' /><br/>
 
             </div>
             <div className='m-2 px-2 py-2 w-full  flex flex-1   justify-center items-center '>
-            <label for="email" className=' text-[#fff] text-[20px] font-Kanit mr-14'>Email:</label>
+            <label   className=' text-[#fff] text-[20px] font-Kanit mr-14'>Email:</label>
             <input type="text" id="email" name="Email" value={form.Email} placeholder='Enter your Email Address' onChange={handleChange} className=' font-Kanit bg-gray-50 border-4 border-gray-300 text-gray-900 text-sm focus:ring-red-800 ml-2 mt-2 rounded-sm  h-1/2 outline-none py-1 w-[400px]' ></input><br/>
 
             </div>
             <div className='m-2 px-2 py-2 w-full  flex justify-center mb-4 items-center '>
-            <label for="email" className=' text-[#fff] text-[20px] font-Kanit mr-14'>Alias    :</label>
+            <label   className=' text-[#fff] text-[20px] font-Kanit mr-14'>Alias    :</label>
             <input type="text" id='alias' name="Alias" value={form.Alias} placeholder='Enter your Alias' onChange={handleChange} className=' font-Kanit bg-gray-50 border-4 border-gray-300 text-gray-900 text-sm focus:ring-red-800 ml-2 mt-2 rounded-sm  h-1/2 outline-none py-1 w-[400px]' ></input><br/>
         
             </div>
@@ -105,13 +117,13 @@ const Formfield= () => {
             {shift && (
               <motion.div className=' px-2 py-2 w-full  flex  flex-col justify-center mb-4 items-center ' {...slideAnimation('left')}>
                <div >
-                <label for="email" className=' text-[#fff] text-[20px] font-Kanit mr-2 pl-4  '>New Passcode:</label>
+                <label  className=' text-[#fff] text-[20px] font-Kanit mr-2 pl-4  '>New Passcode:</label>
                 <input type={`${visible}`} id="pass" name="ipasscode" placeholder='Passcode' className='font-Kanit  bg-gray-50  border-4 border-gray-300 text-gray-900 text-sm focus:ring-red-800 ml-2 mt-2 rounded-sm  h-1/2 outline-none py-1 w-[400px]' ></input><br/>
               </div>
 
             
               <div >
-               <label for="email" className=' text-[#fff] text-[20px] font-Kanit mr-2 inline-block  pl-8 mb-8'>Confirm New:</label>
+               <label  className=' text-[#fff] text-[20px] font-Kanit mr-2 inline-block  pl-8 mb-8'>Confirm New:</label>
                <input type={`${visible}`} id="pass" name="Passcode" value={form.Passcode} placeholder='Confirm' onChange={handleChange} className=' font-Kanit bg-gray-50 border-4 border-gray-300 text-gray-900 text-sm focus:ring-red-800 ml-2 mt-2 rounded-sm  h-1/2 outline-none py-1 w-[400px]' ></input><br/>
               </div>
               <button className='text-[12px] h-fit text-[#fbfbfb] bg-[#FF3131] font-Kanit p-3 mb-10' type='button'  onClick={handleClick}>Show Password</button>

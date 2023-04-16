@@ -1,8 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-export default ConnectDB=(url)=>{
-    mongoose.set('strictQuery',true)
+const Connect=(url)=>{
+    mongoose.set('strictQuery',true);
     mongoose.connect(url)
-    .then(()=>{console.log('Server is succesfully connected')})
-    .catch((err)=>{console.log(err)})
+    .then(()=>console.log("MongoDB connected!"))
+    .catch((err)=>console.log(err));
+
 }
+
+export default Connect;
